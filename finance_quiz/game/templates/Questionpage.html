@@ -6,13 +6,16 @@ Questão 01
 
 {% block body %}
 <div id="question">
-    <!--{{ question }}-->
     <div id="statement">
-        Uma empresa desconta do salário anual de seus funcionários certa porcentagem para um plano de previdência privada. O desconto é de p% sobre             R$ 28.000,00 de renda anual, mais (p + 2)% sobre o montante anual do salário que excede R$ 28.000,00. João teve desconto total de (p + 0,25)% do seu salário anual para o plano de previdência privada. O salário anual de João, em reais, sem o desconto do plano de previdência é:
+        {{ form.question }}
     </div>
     <div id="options">
-        
-
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            
+            <input type="submit" value="Submit">
+        </form>
     </div>
 </div>
 
