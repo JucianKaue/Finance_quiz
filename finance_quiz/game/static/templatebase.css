@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+
+#bar-logo {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Nerko One', cursive;
+    background: rgba(52, 255, 1, 0.342);
+}

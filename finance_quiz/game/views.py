@@ -5,16 +5,17 @@ from django.http import HttpResponse
 # Create your views here.
 
 def HomePage(request):
-    return HttpResponse("Oi")
+    return render(request, template_name='Homepage.html')
 
 
 def QuestionPage(request):
-    return HttpResponse("Oi")
+    return render(request, template_name='Questionpage.html')
 
 
 def ResultPage(request):
-    return HttpResponse("Oi")
+    return render(request, template_name='Resultpage.html')
 
 
 def RankingPage(request):
-    return HttpResponse("Oi")
+    return render(request, template_name='Rankingpage.html')
+
