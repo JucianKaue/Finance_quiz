@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'TemplateBase.html' %}
 
-</body>
-</html>
+{% block title %}
+Questão 01
+{% endblock title %}
+
+{% block body %}
+<div id="question">
+    <!--{{ question }}-->
+    <div id="statement">
+        Uma empresa desconta do salário anual de seus funcionários certa porcentagem para um plano de previdência privada. O desconto é de p% sobre             R$ 28.000,00 de renda anual, mais (p + 2)% sobre o montante anual do salário que excede R$ 28.000,00. João teve desconto total de (p + 0,25)% do seu salário anual para o plano de previdência privada. O salário anual de João, em reais, sem o desconto do plano de previdência é:
+    </div>
+    <div id="options">
+        
+
+    </div>
+</div>
+
+
+{% endblock body %}

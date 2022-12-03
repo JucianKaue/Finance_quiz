@@ -18,6 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.redirect),
     path('homepage/', views.HomePage),
     path('question/', views.QuestionPage),
     path('results/', views.ResultPage),
