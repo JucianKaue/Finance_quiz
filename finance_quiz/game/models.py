@@ -5,6 +5,7 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField(unique=True)
+    ip = models.CharField(max_length=39)
 
 
 class Question(models.Model):
@@ -19,5 +20,5 @@ class Ranking(models.Model):
 
 
 class Options(models.Model):
-    option = models.CharField()
-    right_option = models.CharField()
+    option = models.CharField(max_length=200)
+    right_option = models.CharField(max_length=1)

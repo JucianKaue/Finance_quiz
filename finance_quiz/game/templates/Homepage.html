@@ -7,10 +7,9 @@
 {% endblock head %}
 
 {% block body %}
-<form action="" method="POST">
+<form action="" method="POST" style="padding: 100px">
     {% csrf_token %}
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name">
+    {{ form.as_p }}
     
     <button type="submit">
         START GAME

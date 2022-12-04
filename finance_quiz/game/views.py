@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .forms import QuestionForm
+from .forms import QuestionForm, UserForm
+from game.models import User
 
 # Create your views here.
 def redirect(request):
@@ -9,12 +10,23 @@ def redirect(request):
 
 
 def HomePage(request):
+    form = UserForm()
     if request.method == 'GET':
         return render(request, template_name='Homepage.html', context={
-            'link_css': 'homepage.css'
+            'form': form
         })
     elif request.method == 'POST':
-        return HttpResponseRedirect('/question')
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                ip=request.META.get('REMOTE_ADDR')
+            )
+            user.save()
+            return HttpResponseRedirect('/question')
+        else:
+            return HttpResponse(form.errors)
 
 
 def QuestionPage(request):
