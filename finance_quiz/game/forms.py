@@ -1,16 +1,25 @@
 from django import forms
-from game.models import User
+from game.models import User, Question
+
+from random import randint, shuffle
+
 
 class QuestionForm(forms.Form):
-    question = 'Uma empresa desconta do salário anual de seus funcionários certa porcentagem para um plano de previdência privada. O desconto é de p% sobre             R$ 28.000,00 de renda anual, mais (p + 2)% sobre o montante anual do salário que excede R$ 28.000,00. João teve desconto total de (p + 0,25)% do seu salário anual para o plano de previdência privada. O salário anual de João, em reais, sem o desconto do plano de previdência é:'
-    right_choice = ('B', '32.000,00')
-    choices = (
-        ('A', '28.000,00'),
-        ('B', '32.000,00'),
-        ('C', '32.000,00'),
-        ('D', '42.000,00'),
-        ('E', '56.000,00')
-    )
+    q = Question.objects.get(id=randint(1, (len(Question.objects.all())+1)))
+
+    opt = q.options.split('>-<')                # Splits the string having the choices in a list
+    n_opt = [i for i in range(0, len(opt))]     # Generate a number list from 0 to the number of options
+    shuffle(n_opt)                              # Reorganize de number list in a pseudo-aleatory sequence
+    
+    choices = []
+    for i in n_opt:
+        choices.append(
+            (f'{opt[i]}', f'{opt[i]}')
+        )
+
+    question = q.statement
+    print(q.right_option)
+    right_choice = q.right_option
     opcoes = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
 

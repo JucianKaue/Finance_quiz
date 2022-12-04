@@ -26,23 +26,24 @@ def HomePage(request):
             user.save()
             return HttpResponseRedirect('/question')
         else:
-            return HttpResponse(form.errors)
+            return HttpResponse(f'{form.errors}')
 
 
 def QuestionPage(request):
     form = QuestionForm()
-
+    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
     if request.method == 'GET':
         return render(request, template_name='Questionpage.html', context={
-            'form': form
+            'form': form,
+            'username': user.name
         })
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-            if form.right_choice[0] == form['opcoes'].value():
-                return HttpResponse(f"CERTO! {form['opcoes'].value()} {form.right_choice[0]}")
+            if form.right_choice == form['opcoes'].value():
+                return HttpResponse(f"CERTO! {form['opcoes'].value()} {form.right_choice}")
             else:
-                return HttpResponse(f"ERRADO! {form['opcoes'].value()} {form.right_choice[0]}")
+                return HttpResponse(f"ERRADO! {form['opcoes'].value()} {form.right_choice}")
 
 
 def ResultPage(request):
