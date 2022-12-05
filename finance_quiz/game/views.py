@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .forms import QuestionForm, UserForm
-from game.models import User
+from game.models import User, Ranking
 
 # Create your views here.
 def redirect(request):
@@ -21,7 +21,8 @@ def HomePage(request):
             user = User(
                 name=form.cleaned_data['name'],
                 email=form.cleaned_data['email'],
-                ip=request.META.get('REMOTE_ADDR')
+                ip=request.META.get('REMOTE_ADDR'),
+                temporary_questions='0|0|0'
             )
             user.save()
             return HttpResponseRedirect('/question')
@@ -76,8 +77,18 @@ def ResultPage(request):
     if int(q[2]) < 10:
         return HttpResponseRedirect('/question')
 
+    ranking = Ranking(
+        user=user,
+        score=q[1]
+    )
+    ranking.save()
+
+    user.ip = ''
+    user.temporary_questions = ''
+    user.save()
+
     return render(request, template_name='Resultspage.html', context={
-        'correct_amount': q[1]
+        'correct_amount': ranking.score
     })
 
 
