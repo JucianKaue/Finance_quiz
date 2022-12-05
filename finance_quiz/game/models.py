@@ -5,8 +5,9 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField(unique=True)
-
     ip = models.CharField(max_length=39, unique=True)
+    temporary_questions = models.CharField(max_length=50, default='')
+
 
 class Question(models.Model):
     statement = models.CharField(max_length=1000)

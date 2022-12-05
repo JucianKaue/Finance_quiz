@@ -21,6 +21,7 @@ urlpatterns = [
     path('', views.redirect),
     path('homepage/', views.HomePage),
     path('question/', views.QuestionPage),
+    path('resultquestion/', views.ResultQuestionPage),
     path('results/', views.ResultPage),
     path('ranking/', views.RankingPage)
 ]

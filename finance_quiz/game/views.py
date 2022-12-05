@@ -41,9 +41,26 @@ def QuestionPage(request):
         form = QuestionForm(request.POST)
         if form.is_valid():
             if form.right_choice == form['opcoes'].value():
-                return HttpResponse(f"CERTO! {form['opcoes'].value()} {form.right_choice}")
+               user.temporary_questions = '1'
             else:
-                return HttpResponse(f"ERRADO! {form['opcoes'].value()} {form.right_choice}")
+                user.temporary_questions = '0'
+
+            user.save()
+            return HttpResponseRedirect('/resultquestion')
+
+
+def ResultQuestionPage(request):
+    user = User.objects.get(ipaddress=request.META.get('REMOTE_ADDR'))
+    q = user.temporary_questions.split('|')
+    if q == '1':
+        q[0] = 1
+        q[1] += 1
+    else:
+        q[0] = 0
+
+    user.temporary_questions = f'{q[0]}|{q[1]}'
+    user.save()
+    return render(request, template_name='ResultQuestionPage.html')
 
 
 def ResultPage(request):
