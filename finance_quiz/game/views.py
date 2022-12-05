@@ -40,27 +40,28 @@ def QuestionPage(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
+            if not ('|' in user.temporary_questions):
+                user.temporary_questions = '0|0'
+            q = user.temporary_questions.split('|')
+
             if form.right_choice == form['opcoes'].value():
-               user.temporary_questions = '1'
+                print(form.right_choice, form['opcoes'].value())
+                q[0] = '1'
             else:
-                user.temporary_questions = '0'
+                q[0] = '0'
+            q[1] = int(q[1]) + 1
+            user.temporary_questions = f'{q[0]}|{q[1]}'
             user.save()
 
             return HttpResponseRedirect('/resultquestion')
 
 
 def ResultQuestionPage(request):
-    user = User.objects.get(ipaddress=request.META.get('REMOTE_ADDR'))
+    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
     q = user.temporary_questions.split('|')
-    if q == '1':
-        q[0] = 1
-        q[1] += 1
-    else:
-        q[0] = 0
-
-    user.temporary_questions = f'{q[0]}|{q[1]}'
-    user.save()
-    return render(request, template_name='ResultQuestionPage.html')
+    return render(request, template_name='ResultQuestionPage.html', context={
+        'answer': q[0]
+    })
 
 
 def ResultPage(request):

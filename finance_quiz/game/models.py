@@ -6,7 +6,7 @@ class User(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField(unique=True)
     ip = models.CharField(max_length=39, unique=True)
-    temporary_questions = models.CharField(max_length=50, default='')
+    temporary_questions = models.CharField(max_length=50, default='0|0')
 
 
 class Question(models.Model):
