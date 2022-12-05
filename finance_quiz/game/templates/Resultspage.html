@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'TemplateBase.html' %}
 
-</body>
-</html>
+{% block title %}
+Resultados
+{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+<h1>Você obteve um total de {{ correct_amount }} acertos.</h1>
+
+{% endblock body %}

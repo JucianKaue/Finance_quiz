@@ -41,19 +41,24 @@ def QuestionPage(request):
         form = QuestionForm(request.POST)
         if form.is_valid():
             if not ('|' in user.temporary_questions):
-                user.temporary_questions = '0|0'
+                user.temporary_questions = '0|0|0'
+            # ultima questão correta ou não | total de questões corretas | total de questões
             q = user.temporary_questions.split('|')
 
             if form.right_choice == form['opcoes'].value():
                 print(form.right_choice, form['opcoes'].value())
                 q[0] = '1'
+                q[1] = int(q[1]) + 1
             else:
                 q[0] = '0'
-            q[1] = int(q[1]) + 1
-            user.temporary_questions = f'{q[0]}|{q[1]}'
+            q[2] = int(q[2]) + 1
+            user.temporary_questions = f'{q[0]}|{q[1]}|{q[2]}'
             user.save()
 
-            return HttpResponseRedirect('/resultquestion')
+            if q[2] == 10:
+                return HttpResponseRedirect('/results')
+            else:
+                return HttpResponseRedirect('/resultquestion')
 
 
 def ResultQuestionPage(request):
@@ -65,7 +70,15 @@ def ResultQuestionPage(request):
 
 
 def ResultPage(request):
-    return render(request, template_name='Resultpage.html')
+    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
+    q = user.temporary_questions.split('|')
+
+    if int(q[2]) < 10:
+        return HttpResponseRedirect('/question')
+
+    return render(request, template_name='Resultspage.html', context={
+        'correct_amount': q[1]
+    })
 
 
 def RankingPage(request):
