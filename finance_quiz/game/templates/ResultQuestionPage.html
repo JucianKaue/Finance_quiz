@@ -10,4 +10,22 @@
 
 {% block body %}
 
-{% enblock body %}
+    {% if answer == 1 %}
+    certo
+    {% else %}
+    ERRADO
+    {% endif %}
+
+
+    <script>
+        window.onload(cronometer());
+
+        function redirect() {
+            window.location.href = '/question';
+        }
+
+        function cronometer() {
+            setTimeout(() => redirect(), 5000)
+        }
+    </script>
+{% endblock body %}
