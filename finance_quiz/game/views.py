@@ -44,8 +44,8 @@ def QuestionPage(request):
                user.temporary_questions = '1'
             else:
                 user.temporary_questions = '0'
-
             user.save()
+
             return HttpResponseRedirect('/resultquestion')
 
 

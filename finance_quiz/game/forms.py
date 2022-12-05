@@ -3,23 +3,30 @@ from game.models import User, Question
 
 from random import randint, shuffle
 
+def get_questions():
+    quests = Question.objects.all()
+    if len(quests) > 0:
+        return Question.objects.get(id=randint(1, (len(Question.objects.all())+1)))
+    else:
+        return None
+
 
 class QuestionForm(forms.Form):
-    #q = Question.objects.get(id=randint(1, (len(Question.objects.all())+1)))    # Gets a random question from the db
+    q = get_questions()    # Gets a random question from the db
+    if q:
+        opt = q.options.split('>-<')                # Splits the string having the choices in a list
+        n_opt = [i for i in range(0, len(opt))]     # Generate a number list from 0 to the number of options
+        shuffle(n_opt)                              # Reorganize de number list in a pseudo-aleatory sequence
 
-    """opt = q.options.split('>-<')                # Splits the string having the choices in a list
-    n_opt = [i for i in range(0, len(opt))]     # Generate a number list from 0 to the number of options
-    shuffle(n_opt)                              # Reorganize de number list in a pseudo-aleatory sequence
+        choices = []
+        for i in n_opt:
+            choices.append(
+                (f'{opt[i]}', f'{opt[i]}')
+            )
 
-    choices = []
-    for i in n_opt:
-        choices.append(
-            (f'{opt[i]}', f'{opt[i]}')
-        )
-
-    question = q.statement
-    right_choice = q.right_option
-    opcoes = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)"""
+        question = q.statement
+        right_choice = q.right_option
+        opcoes = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
 
 class UserForm(forms.ModelForm):
