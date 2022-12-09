@@ -41,8 +41,12 @@ def HomePage(request):
 
 
 def QuestionPage(request):
+    try:
+        user = User.objects.get(fingerprint=request.session['fingerprint'])
+    except:
+        return HttpResponseRedirect('/homepage')
+
     form = QuestionForm()
-    user = User.objects.get(fingerprint=request.session['fingerprint'])
     if request.method == 'GET':
         return render(request, template_name='Questionpage.html', context={
             'form': form,
@@ -73,7 +77,11 @@ def QuestionPage(request):
 
 
 def ResultQuestionPage(request):
-    user = User.objects.get(fingerprint=request.session['fingerprint'])
+    try:
+        user = User.objects.get(fingerprint=request.session['fingerprint'])
+    except:
+        return HttpResponseRedirect('/homepage')
+
     q = user.temporary_questions.split('|')
     return render(request, template_name='ResultQuestionPage.html', context={
         'answer': q[0]
@@ -81,7 +89,11 @@ def ResultQuestionPage(request):
 
 
 def ResultPage(request):
-    user = User.objects.get(fingerprint=request.session['fingerprint'])
+    try:
+        user = User.objects.get(fingerprint=request.session['fingerprint'])
+    except:
+        return HttpResponseRedirect('/homepage')
+
     q = user.temporary_questions.split('|')
 
     if int(q[2]) < 10:
