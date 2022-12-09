@@ -93,5 +93,9 @@ def ResultPage(request):
 
 
 def RankingPage(request):
-    return render(request, template_name='Rankingpage.html')
+    raking = Ranking.objects.all().order_by('-score')
+    
+    return render(request, template_name='Rankingpage.html', context={
+        'ranking': raking
+    })
 

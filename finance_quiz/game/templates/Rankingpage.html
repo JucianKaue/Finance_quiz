@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'TemplateBase.html' %}
 
-</body>
-</html>
+{% block title %}
+
+{% endblock title %}
+
+{% block body %}
+<h1>RANKING</h1>
+
+<ol>
+
+
+{% for e in ranking %}
+    <li>{{e.user.name}} - {{ e.score }}</li>
+{% endfor %}
+
+</ol>
+
+{% endblock body %}
