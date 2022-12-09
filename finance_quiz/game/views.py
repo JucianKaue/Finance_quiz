@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import QuestionForm, UserForm
 from game.models import User, Ranking
 
+from game.utils import fingerprint_generator
+
 # Create your views here.
 def redirect(request):
     return HttpResponseRedirect("/homepage")
@@ -18,13 +20,21 @@ def HomePage(request):
     elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            user = User(
-                name=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
-                ip=request.META.get('REMOTE_ADDR'),
-                temporary_questions='0|0|0'
-            )
-            user.save()
+            try:
+                User.objects.get(fingerprint=request.session['fingerprint'])
+            except:
+                fingerprint = fingerprint_generator()
+
+                user = User(
+                    name=form.cleaned_data['name'],
+                    email=form.cleaned_data['email'],
+                    fingerprint=fingerprint,
+                    temporary_questions='0|0|0'
+                )
+                user.save()
+
+                request.session['fingerprint'] = fingerprint
+
             return HttpResponseRedirect('/question')
         else:
             return HttpResponse(f'{form.errors}')
@@ -32,7 +42,7 @@ def HomePage(request):
 
 def QuestionPage(request):
     form = QuestionForm()
-    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
+    user = User.objects.get(fingerprint=request.session['fingerprint'])
     if request.method == 'GET':
         return render(request, template_name='Questionpage.html', context={
             'form': form,
@@ -63,7 +73,7 @@ def QuestionPage(request):
 
 
 def ResultQuestionPage(request):
-    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
+    user = User.objects.get(fingerprint=request.session['fingerprint'])
     q = user.temporary_questions.split('|')
     return render(request, template_name='ResultQuestionPage.html', context={
         'answer': q[0]
@@ -71,7 +81,7 @@ def ResultQuestionPage(request):
 
 
 def ResultPage(request):
-    user = User.objects.get(ip=request.META.get('REMOTE_ADDR'))
+    user = User.objects.get(fingerprint=request.session['fingerprint'])
     q = user.temporary_questions.split('|')
 
     if int(q[2]) < 10:
@@ -83,7 +93,7 @@ def ResultPage(request):
     )
     ranking.save()
 
-    user.ip = ''
+    user.fingerprint = fingerprint_generator()
     user.temporary_questions = ''
     user.save()
 
@@ -94,7 +104,7 @@ def ResultPage(request):
 
 def RankingPage(request):
     raking = Ranking.objects.all().order_by('-score')
-    
+
     return render(request, template_name='Rankingpage.html', context={
         'ranking': raking
     })

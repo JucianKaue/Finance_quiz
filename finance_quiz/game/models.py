@@ -5,7 +5,7 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=60)
     email = models.EmailField(unique=True)
-    ip = models.CharField(max_length=39, unique=True)
+    fingerprint = models.CharField(max_length=100, unique=True)
     temporary_questions = models.CharField(max_length=50, default='0|0')
 
 
