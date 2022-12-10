@@ -9,7 +9,8 @@ def fingerprint_generator():
 
     try:
         User.objects.filter(session_hash=hash)
-        return hash
-    except:
         fingerprint_generator()
+    except:
+        return hash
+        f
 

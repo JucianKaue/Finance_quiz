@@ -1,19 +1,29 @@
 {% extends 'TemplateBase.html' %}
+{% load static %}
 
 {% block title %} Homepage {% endblock title %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
 {% endblock head %}
 
 {% block body %}
-<form action="" method="POST" style="padding: 100px">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <button type="submit">
-        START GAME
-    </button>
-</form>
+<div class="card">
+    <div class="card-image">
+        <h2 class="card-heading">
+            Teste seu conhecimento em finanças
+            <small> Comece a jogar agora </small>
+        </h2>
+    </div>
+    <form class="card-form" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button id="start-button" type="submit">
+            START GAME
+        </button>
+    </form>    
+</div>
+
 
 {% endblock body %}

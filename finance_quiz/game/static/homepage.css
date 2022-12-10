@@ -1,5 +1,108 @@
-#div-start-button {
-    display: block;
-    margin:0 auto;
-    background-color: aqua;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+*, *:after, *:before {
+	 box-sizing: border-box;
+}
+
+body {
+	 font-family: "DM Sans", sans-serif;
+	 line-height: 1.5;
+	 background-color: #f1f3fb;
+	 padding: 0 2rem;
+}
+
+img {
+	 max-width: 100%;
+	 display: block;
+}
+
+input {
+	 appearance: none;
+	 border-radius: 0;
+}
+
+.card {
+	 margin: 2rem auto;
+	 display: flex;
+	 flex-direction: column;
+	 width: 100%;
+	 max-width: 425px;
+	 background-color: #fff;
+	 border-radius: 10px;
+	 box-shadow: 0 10px 20px 0 rgba(153, 153, 153, .25);
+	 padding: 0.75rem;
+}
+
+.card-image {
+	 border-radius: 8px;
+	 overflow: hidden;
+	 padding-bottom: 60%;
+	 background-image: url('https://images.pexels.com/photos/6328857/pexels-photo-6328857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+	 background-repeat: no-repeat;
+	 background-size: 120%;
+	 background-position: 0 0%;
+	 position: relative;
+}
+
+.card-heading {
+	 position: absolute;
+	 left: 5%;
+	 top: 3%;
+	 right: 10%;
+	 font-size: 1.55rem;
+	 font-weight: 700;
+	 color: #063500;
+	 line-height: 1.1;
+}
+
+.card-heading small {
+	 display: block;
+	 font-size: 0.60em;
+	 font-weight: 500;
+	 margin-top: 0.25em;
+}
+
+form {
+	 padding: 2.5rem 1rem 0;
+}
+
+input {
+	 display: flex;
+	 flex-direction: column-reverse;
+	 position: relative;
+	 padding-top: 1.5rem;
+}
+
+label {
+	 color: #576269;
+	 transition: 0.25s ease;
+}
+
+input {
+	 border: 0;
+	 z-index: 1;
+	 background-color: transparent;
+	 border-bottom: 2px solid rgb(49, 231, 104);
+	 font: inherit;
+	 font-size: 1.125rem;
+	 padding: 0.2rem;
+     width: 100%;
+}
+
+input:focus {
+	 outline: 0;
+	 border-bottom-color: rgb(27, 141, 62);
+}
+
+button {
+	 font: inherit;
+	 font-size: 1.25rem;
+	 padding: 0.3em;
+	 width: 100%;
+	 font-weight: 500;
+	 background-color: #20660b;
+	 border-radius: 6px;
+	 color: #fff;
+     margin-top: 1.5em;
+     cursor: pointer;
 }
