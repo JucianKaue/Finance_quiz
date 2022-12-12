@@ -1,0 +1,63 @@
+#statement {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto; 
+
+    margin-top: 30px;
+    padding: 15px 20px;
+
+    border-style: double;
+    border-width: 5px;
+    border-radius: 10px;
+
+    text-align: justify;
+    background-color: whitesmoke;
+}
+
+#statement p {
+    font-size: larger;
+}
+
+#id_opcoes {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+	display: flex;
+
+    padding: 20px;
+}
+
+#id_opcoes div {
+    flex-direction: row;
+    margin: auto;
+    display: flex;
+    padding: 20px;
+
+    background-color: rgb(49, 231, 104);
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(3, 78, 3);
+}
+
+input[type=submit] {
+    width: 90%;
+    margin-left: 5%;
+
+    background-color: #20660b;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#question {
+    margin-top: 20px;
+    padding-bottom: 30px;
+
+    border-style: groove;
+    background-color: #c0ebb3;
+}
+

@@ -3,14 +3,13 @@ from game.models import User
 
 
 def fingerprint_generator():
-    hash = ''
+    fingerprint = ''
     for i in range(0, 100):
-        hash += f'{chr(randint(33, 124))}'
+        fingerprint += f'{chr(randint(33, 124))}'
 
     try:
-        User.objects.filter(session_hash=hash)
+        User.objects.filter(session_fingerprint=fingerprint)
         fingerprint_generator()
     except:
-        return hash
-        f
+        return fingerprint
 
